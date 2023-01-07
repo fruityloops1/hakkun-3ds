@@ -1,0 +1,28 @@
+SECTIONS
+{
+    . = CODE_OFFSET ;
+    .hk : {
+        ASSERT(. == CODE_OFFSET, "wrong code offset");
+        *(.hk.header)
+        *(.hk.init)
+        KEEP (*(.hk.initend))
+    }
+    .hk.hooks : {
+        *(.hk.hooks)
+    }
+    .text : {
+        __text_start = . ;
+        *(.text)
+        *(.text.*)
+		KEEP (*(.text.exported))
+        *(.rodata)
+        *(.data)
+        *(.bss)
+        *(COMMON)
+        __text_end  = . ;
+		__end__ = __text_end;
+    }
+    .ARM : {
+        *(.ARM.exidx)
+    }
+}

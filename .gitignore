@@ -1,0 +1,8 @@
+.vscode/
+.cache/
+compile_commands.json
+
+Build/
+Data/musl/
+code.bin
+exheader.bin
