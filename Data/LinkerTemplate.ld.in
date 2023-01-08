@@ -1,6 +1,8 @@
 SECTIONS
 {
     . = CODE_OFFSET ;
+    __code_offset__ = CODE_OFFSET ;
+    __main_offset__ = 0x00100000;
     .hk : {
         ASSERT(. == CODE_OFFSET, "wrong code offset");
         *(.hk.header)
@@ -15,7 +17,9 @@ SECTIONS
         *(.text)
         *(.text.*)
 		KEEP (*(.text.exported))
+        __rodata_start = . ;
         *(.rodata)
+        __rodata_end = . ;
         *(.data)
         *(.bss)
         *(COMMON)

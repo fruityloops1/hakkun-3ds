@@ -28,6 +28,10 @@ std::vector<u8> appendNewCode(const std::vector<u8>& oldCode, const std::vector<
     const u32 newCodeSize = newCode.size() + 32;
     PatchHeader* header = reinterpret_cast<PatchHeader*>(&newBinary[newCodeOffset - sCodeStart]);
     header->codeSize = newCodeSize;
+    header->textOffset = exh.sci.textCodeSetInfo.address;
+    header->textSize = exh.sci.textCodeSetInfo.size;
+    header->rodataOffset = exh.sci.readOnlyCodeSetInfo.address;
+    header->rodataSize = exh.sci.readOnlyCodeSetInfo.size;
 
     const u32 loaderOffset = (exh.sci.textCodeSetInfo.size + sCodeStart + 0xF) & ~0xF;
     const u32 loaderMaxSize = exh.sci.readOnlyCodeSetInfo.address - loaderOffset;

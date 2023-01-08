@@ -171,6 +171,8 @@ public:
     {
     }
 
+    u32 getValue() { return mValue; }
+
     bool Succeeded() const { return mValue >= 0; }
     bool Failed() const { return mValue < 0; }
     Level GetLevel() const { return (Level)((mValue >> 27) & 0x1F); }
