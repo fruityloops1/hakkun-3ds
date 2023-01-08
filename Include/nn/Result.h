@@ -166,6 +166,11 @@ public:
 
     Result() { }
 
+    Result(u32 value)
+        : mValue(value)
+    {
+    }
+
     Result(Level level, Summary summary, ModuleType module, int desc)
         : mValue((((level)&0x1F) << 27) | (((summary)&0x3F) << 21) | (((module)&0xFF) << 10) | ((desc)&0x3FF))
     {

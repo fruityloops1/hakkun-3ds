@@ -7,6 +7,7 @@ u32 makeBranch(u32 to, u32 at, u8 type);
 
 struct BranchHook : public PatchBase {
     const u32 mReplaceAddress;
+    const u32 mMemberFuncFiller;
     const u32 mFunc;
     const u8 mBranchType;
 

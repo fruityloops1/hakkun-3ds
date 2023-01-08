@@ -24,13 +24,13 @@ std::vector<const PatchBase*> collectPatchesFromMap(const std::vector<u8>& data,
 
     bool isAtHooks = false;
     while (std::getline(stream, line)) {
-        if (line.rfind(".text") != std::string::npos)
+        std::vector<std::string> split = splitWhitespace(line);
+        if (isAtHooks && split[4].find('.') == 0)
             break;
 
         if (isAtHooks && line.find("CMakeFiles") == std::string::npos) {
-            std::vector<std::string> split = splitWhitespace(line);
-
             u32 address = std::stoi(split[0], 0, 16);
+            printf("found 0x%.8x %s\n", address, split[4].c_str());
 
             patches.push_back(reinterpret_cast<const PatchBase*>(&data.at(address - sCodeStart)));
 

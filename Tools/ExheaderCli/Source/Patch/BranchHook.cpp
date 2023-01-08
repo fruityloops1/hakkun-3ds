@@ -15,6 +15,6 @@ u32 makeBranch(u32 to, u32 at, u8 type)
 
 void BranchHook::apply(std::vector<u8>& data) const
 {
-    printf("Placing branch hook to 0x%.8x with type 0x%x at 0x%.8x\n", mReplaceAddress, mBranchType, mFunc);
+    printf("Placing branch hook to 0x%.8x with type 0x%x at 0x%.8x\n", mFunc, mBranchType, mReplaceAddress);
     *reinterpret_cast<u32*>(&data[mReplaceAddress - sCodeStart]) = makeBranch(mFunc, mReplaceAddress, mBranchType);
 }

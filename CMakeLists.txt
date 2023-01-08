@@ -37,7 +37,7 @@ set(ARCH_FLAGS "-target armv6k-none-eabi -mtune=mpcore -mfloat-abi=hard -mtp=sof
 set(CMAKE_ASM_FLAGS "${ARCH_FLAGS} -x assembler-with-cpp")
 set(CMAKE_CXX_FLAGS "${ARCH_FLAGS} ${INCLUDES} \
                     -g -O3 \
-                    -fno-exceptions \
+                    -fno-exceptions -fno-rtti \
                     ")
 
 set(CMAKE_EXE_LINKER_FLAGS "-nodefaultlibs ${ARCH_FLAGS} ${LIBS} -T ${CMAKE_CURRENT_BINARY_DIR}/Linker.ld -T ${CMAKE_CURRENT_BINARY_DIR}/Symbols.ld -Wl,--no-demangle -Wl,-Map=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_PROJECT_NAME}.map")
