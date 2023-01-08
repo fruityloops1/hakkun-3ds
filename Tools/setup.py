@@ -2,6 +2,7 @@ import os
 import subprocess
 import tarfile
 import multiprocessing
+import importlib.util
 
 def tryCompileExheaderCli():
     print("Compiling ExheaderCli")
@@ -15,6 +16,10 @@ def tryCompileExheaderCli():
 musl_ver = 'musl-1.2.3'
 musl_source_tar_name = musl_ver + '.tar.gz'
 musl_source = "https://musl.libc.org/releases/" + musl_source_tar_name
+
+libunwind_ver = "libunwind-1.6.2"
+libunwind_source_tar_name = libunwind_ver + ".tar.gz"
+libunwind_source = "https://download.savannah.nongnu.org/releases/libunwind/" + libunwind_source_tar_name
 
 def tryGetAndCompileMusl():
     print(f"Downloading musl")
@@ -46,12 +51,24 @@ def tryGetAndCompileMusl():
     subprocess.run(["./configure", "--target=armv6k-none-eabi"], env=env)
 
     subprocess.run(["make", f"-j {multiprocessing.cpu_count()}"])
+
+    os.chdir("../..")
+
+def tryCompileCompilerRtBuiltins():
+    print(f"Compiling compiler-rt")
+
+    os.chdir('Data/compiler-rt')
+    spec = importlib.util.spec_from_file_location("build", "build.py")
+    build = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(build)
+
+    build.compile()
     
 
 if (not os.path.isdir('Tools/ExheaderCli/Build')):
     tryCompileExheaderCli()
-
-
 if (not os.path.isdir('Data/musl')):
     tryGetAndCompileMusl()
+if (not os.path.isdir('Data/compiler-rt/Build')):
+    tryCompileCompilerRtBuiltins()
 
