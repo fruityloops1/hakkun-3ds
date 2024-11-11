@@ -20,3 +20,7 @@ def compile():
     
     for filename in files:
         subprocess.run(["llvm-ar", "q", "Build/builtins.a", os.path.join('Build', f'{filename}.o')])
+
+
+if __name__ == "__main__":
+    compile()
